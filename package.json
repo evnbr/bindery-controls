@@ -13,6 +13,12 @@
     "type": "git",
     "url": "git://github.com/evnbr/bindery-controls.git"
   },
+  "dependencies": {
+    "hyperscript": "^2.0.2"
+  },
+  "peerDependencies": {
+    "bindery": "^2.1.0"
+  },
   "devDependencies": {
     "babel-core": "^6.25.0",
     "babel-jest": "^20.0.3",
@@ -48,8 +54,5 @@
     "pagination",
     "print"
   ],
-  "license": "MIT",
-  "dependencies": {
-    "hyperscript": "^2.0.2"
-  }
+  "license": "MIT"
 }

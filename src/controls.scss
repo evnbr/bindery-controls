@@ -121,7 +121,6 @@ $btn-active: #eee;
   100% { transform: rotateZ(360deg); }
 }
 
-
 .#{$pre}-controls .#{$pre}-btn {
   -webkit-appearance: none;
   cursor: pointer;
@@ -197,7 +196,7 @@ $btn-active: #eee;
 
 .#{$pre}-controls .#{$pre}-select-wrap {
   padding-right: 32px;
-  background-image: url('./Viewer/_assets/icon-carat.svg');
+  background-image: url('./_assets/icon-carat.svg');
   background-repeat: no-repeat;
   background-position: right;
   transition: all 0.2s;

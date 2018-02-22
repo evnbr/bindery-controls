@@ -15,8 +15,8 @@ import {
 const supportsCustomPageSize = !!window.chrome && !!window.chrome.webstore;
 
 class Controls {
-  constructor(Bindery, initialState, actions) {
-    const { Mode, Paper, Layout, Marks } = Bindery;
+  constructor(availableOptions, initialState, actions) {
+    const { Mode, Paper, Layout, Marks } = availableOptions;
 
     let viewSelect;
     let marksSelect;

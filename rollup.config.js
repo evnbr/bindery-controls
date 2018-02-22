@@ -28,7 +28,9 @@ const sassPlugin = () => sass({
         { removeTitle: true },
       ] },
     }),
-    cssnano(),
+    cssnano({
+      reduceIdents: false,
+    }),
   ])
     .process(css)
     .then(result => result.css),
@@ -52,7 +54,7 @@ export default [
 
   // minified browser-friendly build
   Object.assign({}, baseConfig, {
-    dest: 'dist/bindery.min.js',
+    dest: 'dist/bindery-controls.min.js',
     format: 'iife',
     sourceMap: true,
     plugins: [
@@ -65,7 +67,6 @@ export default [
       }),
     ],
   }),
-
 
   // CommonJS (for Node) and ES module (for bundlers) build.
   Object.assign({}, baseConfig, {
