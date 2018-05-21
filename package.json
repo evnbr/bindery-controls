@@ -1,6 +1,6 @@
 {
   "name": "bindery-controls",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Default UI for bindery.js",
   "main": "dist/bindery-controls.cjs.js",
   "module": "dist/bindery-controls.esm.js",
@@ -17,7 +17,7 @@
     "hyperscript": "^2.0.2"
   },
   "peerDependencies": {
-    "bindery": "^2.1.0"
+    "bindery": "^2.3.0"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",

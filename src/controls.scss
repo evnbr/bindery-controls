@@ -1,10 +1,4 @@
 $pre: "📖";
-
-$accent: #0000c5; //#00984b;
-$text: black;
-$background: #f4f4f4;
-$hover: rgba(0,0,0,0.04);
-
 $system: -apple-system, BlinkMacSystemFont, "Roboto", sans-serif;
 
 @media screen {
@@ -13,23 +7,22 @@ $system: -apple-system, BlinkMacSystemFont, "Roboto", sans-serif;
   }
 }
 
-$btn-pad: 8px 16px;
-$btn-hover: #ddd;
-$btn-active: #eee;
+$btn-pad: 8px 20px;
+$btn-hover: rgba(0,0,0,0.04);
+$btn-active: rgba(0,0,0,0.08);
 
 .#{$pre}-controls {
   font: 16px / 1.4 $system;
   display: none;
   flex-direction: row;
   align-items: start;
-
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 999;
   margin: auto;
-  color: $text;
+  color: var(--bindery-ui-text);
   padding: 10px;
   overflow: visible;
   -webkit-font-smoothing: antialiased;
@@ -43,7 +36,7 @@ $btn-active: #eee;
   }
 
   a {
-    color: var(--bindery-ui-accent, $accent);
+    color: var(--bindery-ui-accent);
     text-decoration: none;
   }
 }
@@ -72,13 +65,13 @@ $btn-active: #eee;
   display: flex;
   opacity: 0;
   max-width: 0;
-  border-radius: 4px;
-  background: #e4e4e4;
+  border-radius: 32px;
   overflow: hidden;
   transition: all 0.4s;
   flex-wrap: nowrap;
   transition-delay: 0.2s;
-  [bindery-view-mode='print'] & {
+  // border: 1px solid currentColor;
+  .#{$pre}-view-print & {
     max-width: 720px;
     margin-right: 12px;
     opacity: 1;
@@ -90,35 +83,6 @@ $btn-active: #eee;
 }
 .#{$pre}-controls .#{$pre}-print-options .#{$pre}-control {
   background-color: transparent;
-}
-
-
-.#{$pre}-spinner {
-  border: 1px solid transparent;
-  border-left-color: black;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  vertical-align: middle;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.2s;
-  margin-right: 16px;
-  .#{$pre}-in-progress & {
-    // display: inline-block;
-    opacity: 1;
-    animation: spin 0.6s linear infinite;
-  }
-  .#{$pre}-debug & {
-    animation: spin 2s linear infinite;
-  }
-  &.#{$pre}-paused {
-    animation: none;
-  }
-}
-@keyframes spin {
-  0%   { transform: rotateZ(0); }
-  100% { transform: rotateZ(360deg); }
 }
 
 .#{$pre}-controls .#{$pre}-btn {
@@ -140,12 +104,10 @@ $btn-active: #eee;
   }
 }
 
-.#{$pre}-controls .#{$pre}-control {
-  border-radius: 4px;
-  color: black;
+.#{$pre}-control {
+  border-radius: 32px;
+  color: var(--bindery-ui-text);
   padding: $btn-pad;
-  background-color: $background;
-  border: 0;
 }
 
 .#{$pre}-controls .#{$pre}-btn-light {
@@ -154,12 +116,12 @@ $btn-active: #eee;
 }
 
 .#{$pre}-controls .#{$pre}-btn-main {
-  background: var(--bindery-ui-accent, $accent);
-  border-color: var(--bindery-ui-accent, $accent);
+  background: var(--bindery-ui-accent);
+  border-color: var(--bindery-ui-accent);
   color: white;
 
   &:hover {
-    background: var(--bindery-ui-accent, $accent);
+    background: var(--bindery-ui-accent);
     opacity: 0.7;
   }
 
@@ -185,7 +147,6 @@ $btn-active: #eee;
 .#{$pre}-btn-print {
   transition: all 0.5s;
   .#{$pre}-in-progress & {
-    // background: gray;
     opacity: 0;
     pointer-events: none;
   }
@@ -195,13 +156,24 @@ $btn-active: #eee;
 }
 
 .#{$pre}-controls .#{$pre}-select-wrap {
-  padding-right: 32px;
-  background-image: url('./_assets/icon-carat.svg');
-  background-repeat: no-repeat;
-  background-position: right;
+  padding-right: 36px;
+  // background-image: url('./_assets/icon-carat.svg');
+  // background-repeat: no-repeat;
+  // background-position: right 6px center;
   transition: all 0.2s;
   white-space: nowrap;
   width: 100%;
+
+  &:after {
+    content: "";
+    position: absolute;
+    right: 18px;
+    top: 14px;
+    border-bottom: 1px solid currentColor;
+    border-right: 1px solid currentColor;
+    padding: 3px;
+    transform: rotate(45deg);
+  }
 
   &:hover {
     background-color: $btn-hover;
@@ -276,11 +248,11 @@ $btn-active: #eee;
     transition: all 0.2s;
   }
 
-  [bindery-view-mode='print'].#{$pre}-root {
+  .#{$pre}-view-print.#{$pre}-root {
     padding-top: 120px;
   }
   .#{$pre}-controls {
-    height: 98px;
+    height: 60px;
   }
 
   .#{$pre}-view-row {
@@ -296,17 +268,28 @@ $btn-active: #eee;
       margin: 0;
     }
   }
+}
 
+.#{$pre}-view-print .#{$pre}-controls {
+  background: var(--bindery-ui-bg);
+  box-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.14);
+}
+
+@media screen and (max-width: 960px) {
+  .#{$pre}-controls {
+    background: var(--bindery-ui-bg);
+    box-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.14);
+  }
 }
 
 @media screen and (max-width: 500px) {
-  [bindery-view-mode='print'].#{$pre}-root {
+  .#{$pre}-view-print.#{$pre}-root {
     padding-top: 190px;
   }
 
-  [bindery-view-mode='print'].#{$pre}-root {
+  .#{$pre}-view-print {
     .#{$pre}-controls {
-      background: $background;
+      background: var(--bindery-ui-bg);
       height: 170px;
     }
   }
