@@ -1,58 +1,30 @@
-import h from 'hyperscript';
+import { div, button, select, option } from './dom';
 import c from './prefixClass';
 
-const title = function (...arg) {
-  return h(c('.title'), ...arg);
-};
-
-const heading = function (...arg) {
-  return h(c('.heading'), ...arg);
-};
-
-const row = function (...arg) {
-  return h(c('.row'), ...arg);
-};
+const row = children => div(c('row'), children);
 
 // Button
-const btn = function (...arg) {
-  return h(`button${c('.control')}${c('.btn')}`, ...arg);
-};
+const btn = (txt) => button(`${c('control')} ${c('btn')}`, txt);
+const btnLight = (txt) => button(`${c('control')} ${c('btn')} ${c('btn-light')}`, txt);
+const btnMain = (txt) => button(`${c('control')} ${c('btn')} ${c('btn-main')}`, txt);
 
-const btnLight = function (...arg) {
-  return h(`button${c('.control')}${c('.btn')}${c('.btn-light')}`, ...arg);
-};
-
-const btnMain = function (...arg) {
-  return h(`button${c('.control')}${c('.btn')}${c('.btn-main')}`, ...arg);
-};
-
-const select = function (...arg) {
-  const selectVal = h(c('.select-val'), 'Value');
-  const selectEl = h(`select.${c('select')}`, ...arg);
+const dropdown = (attrs, options) => {
+  const selectVal = div(c('select-val'), [], 'Value');
+  const selectEl = select(c('select'), attrs, options);
   const updateVal = () => {
     selectVal.textContent = selectEl.options[selectEl.selectedIndex].text;
   };
   selectEl.addEventListener('change', updateVal);
   updateVal();
-  return h(`${c('.select-wrap')}${c('.control')}`,
-    selectVal,
-    selectEl
-  );
-};
-
-
-const option = function (...arg) {
-  return h('option', ...arg);
+  return div(`${c('select-wrap')} ${c('control')}`, [selectVal, selectEl]);
 };
 
 export {
-  title,
   row,
-  heading,
   btn,
   btnLight,
   btnMain,
-  select,
+  dropdown,
   option,
-  // viewMode,
+  div,
 };

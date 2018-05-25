@@ -1,16 +1,16 @@
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
-import babel from 'rollup-plugin-babel';
-import uglify from 'rollup-plugin-uglify';
+import minify from 'rollup-plugin-babel-minify';
 
 import sass from 'rollup-plugin-sass';
 import postcss from 'postcss';
+import prefixer from 'postcss-class-prefix';
 import cssnano from 'cssnano';
-import inlinesvg from 'postcss-svg';
 
 import pkg from './package.json';
 
 
+const extend = (a, b) => Object.assign({}, a, b);
 const baseConfig = {
   entry: 'src/index.js',
   moduleName: 'BinderyControls',
@@ -20,25 +20,14 @@ const baseConfig = {
 const sassPlugin = () => sass({
   insert: true,
   processor: css => postcss([
-    inlinesvg({
-      func: 'url',
-      dirs: './src',
-      svgo: { plugins: [
-        { cleanupAttrs: true },
-        { removeTitle: true },
-      ] },
-    }),
-    cssnano({
-      reduceIdents: false,
-    }),
-  ])
-    .process(css)
-    .then(result => result.css),
+    prefixer('📖-'),
+    cssnano({ reduceIdents: false }),
+  ]).process(css).then(result => result.css),
 });
 
 export default [
   // browser-friendly UMD build
-  Object.assign({}, baseConfig, {
+  extend(baseConfig, {
     dest: pkg.browser,
     format: 'umd',
     sourceMap: true,
@@ -46,14 +35,11 @@ export default [
       resolve(),
       commonjs(),
       sassPlugin(),
-      babel({
-        exclude: ['node_modules/**'],
-      }),
     ],
   }),
 
   // minified browser-friendly build
-  Object.assign({}, baseConfig, {
+  extend(baseConfig, {
     dest: 'dist/bindery-controls.min.js',
     format: 'iife',
     sourceMap: true,
@@ -61,15 +47,14 @@ export default [
       resolve(),
       commonjs(),
       sassPlugin(),
-      uglify(),
-      babel({
-        exclude: ['node_modules/**'],
+      minify({
+        comments: false,
       }),
     ],
   }),
 
   // CommonJS (for Node) and ES module (for bundlers) build.
-  Object.assign({}, baseConfig, {
+  extend(baseConfig, {
     external: ['hyperscript'],
     targets: [
       { dest: pkg.main, format: 'cjs' },
@@ -78,9 +63,6 @@ export default [
     plugins: [
       resolve(),
       sassPlugin(),
-      babel({
-        exclude: ['node_modules/**'],
-      }),
     ],
   }),
 ];

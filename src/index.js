@@ -1,15 +1,14 @@
-import h from 'hyperscript';
 import c from './prefixClass';
 
 import './controls.scss';
 
 import {
-  title,
-  select,
+  dropdown,
   option,
   btn,
   btnMain,
   row,
+  div,
 } from './components';
 
 const supportsCustomPageSize = !!window.chrome && !!window.chrome.webstore;
@@ -20,7 +19,6 @@ class Controls {
 
     let viewSelect;
     let marksSelect;
-    let spinner;
 
     const print = () => {
       actions.setMode(Mode.PRINT);
@@ -62,6 +60,7 @@ class Controls {
 
     const updatePaper = (e) => {
       const newVal = e.target.value;
+      console.log(newVal);
       actions.setPaper(newVal);
       if (newVal === Paper.AUTO || newVal === Paper.AUTO_BLEED) {
         marksSelect.classList.add(c('hidden-select'));
@@ -70,14 +69,14 @@ class Controls {
       }
     };
 
-    const sheetSizeSelect = select({ onchange: updatePaper }, ...paperSizes);
+    const sheetSizeSelect = dropdown({ onchange: updatePaper }, paperSizes);
 
-    const layoutSelect = select(
+    const layoutSelect = dropdown(
       { onchange: (e) => {
         actions.setLayout(e.target.value);
         updateSheetSizeNames();
       } },
-      ...[
+      [
         option({ value: Layout.PAGES }, '1 Page / Sheet'),
         option({ value: Layout.SPREADS }, '1 Spread / Sheet'),
         option({ value: Layout.BOOKLET }, 'Booklet Sheets'),
@@ -86,15 +85,17 @@ class Controls {
         return opt;
       })
     );
-    const arrangement = row(layoutSelect);
+    const arrangement = row([layoutSelect]);
 
-    marksSelect = select(
+    marksSelect = dropdown(
       { onchange: e => actions.setMarks(e.target.value) },
-      ...[option({ value: Marks.NONE }, 'No Marks'),
+      [
+        option({ value: Marks.NONE }, 'No Marks'),
         option({ value: Marks.CROP, selected: true }, 'Crop Marks'),
         option({ value: Marks.BLEED }, 'Bleed Marks'),
-        option({ value: Marks.CROP }, 'Crop and Bleed'),
+        option({ value: Marks.BOTH }, 'Crop and Bleed'),
       ].map((opt) => {
+        console.log(opt);
         if (opt.value === initialState.marks) { opt.selected = true; }
         return opt;
       })
@@ -102,88 +103,21 @@ class Controls {
     if (supportsCustomPageSize) {
       marksSelect.classList.add(c('hidden-select'));
     }
-    const marks = row(marksSelect);
-    const sheetSize = row(sheetSizeSelect);
+    const marks = row([marksSelect]);
+    const sheetSize = row([sheetSizeSelect]);
 
-    const headerContent = h('span', 'Loading');
 
-    let playSlow;
-    const step = btn('→', {
-      style: { display: 'none' },
-      onclick: () => {
-        window.binderyDebug.step();
-        document.scrollingElement.scrollTop = document.scrollingElement.scrollHeight;
-      },
-    });
-    const pause = btn('❙❙', {
-      onclick: () => {
-        window.binderyDebug.pause();
-        spinner.classList.add(c('paused'));
-        pause.style.display = 'none';
-        playSlow.style.display = '';
-        step.style.display = '';
-      },
-    });
-    playSlow = btn('▶️', {
-      style: { display: 'none' },
-      onclick: () => {
-        window.binderyDebug.resume();
-        spinner.classList.remove(c('paused'));
-        playSlow.style.display = 'none';
-        pause.style.display = '';
-        step.style.display = 'none';
-      },
-    });
-    const debugDone = btn('Finish', {
-      onclick: () => {
-        spinner.classList.remove(c('paused'));
-        window.binderyDebug.finish();
-      },
-    });
-
-    const debugControls = h(c('.debug-controls'),
-      pause,
-      playSlow,
-      step,
-      debugDone,
-    );
-
-    spinner = h(c('.spinner'));
-    const header = title(
-      headerContent,
-    );
-
-    this.setInProgress = () => {
-      headerContent.textContent = 'Paginating';
-    };
-
-    let lastUpdate = 0;
-    this.updateProgress = (count) => {
-      const t = performance.now();
-      if (t - lastUpdate > 100) {
-        lastUpdate = t;
-        headerContent.textContent = `${count} Pages`;
-      }
-    };
-
-    this.setDone = (length) => {
-      headerContent.textContent = `${length} Pages`;
-    };
-
-    this.setInvalid = () => {
-    };
+    this.setDone = () => {};
+    this.setInProgress = () => {};
+    this.updateProgress = () => {};
 
     printBtn.classList.add(c('btn-print'));
-    const options = row(
-      arrangement,
-      sheetSize,
-      marks
-    );
+    const options = row([arrangement, sheetSize, marks]);
     options.classList.add(c('print-options'));
 
-    viewSelect = select(
+    viewSelect = dropdown(
       { onchange: e => actions.setMode(e.target.value) },
-      ...[
+      [
         option({ value: Mode.PREVIEW }, 'Preview'),
         option({ value: Mode.FLIPBOOK }, 'Flipbook'),
         option({ value: Mode.PRINT }, 'Print Preview'),
@@ -192,16 +126,10 @@ class Controls {
         return opt;
       })
     );
-    const viewRow = row(viewSelect);
+    const viewRow = row([viewSelect]);
     viewRow.classList.add(c('view-row'));
 
-    this.element = h(c('.controls'),
-      header,
-      debugControls,
-      viewRow,
-      options,
-      printBtn,
-    );
+    this.element = div(c('controls'), [viewRow, options, printBtn]);
   }
 
 }
