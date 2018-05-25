@@ -49,17 +49,6 @@ $btn-active: rgba(0,0,0,0.08);
   user-select: none;
 }
 
-.title {
-  position: relative;
-  display: flex;
-  padding: $btn-pad;
-  transition: opacity 0.2s;
-  display: flex;
-  white-space: nowrap;
-  overflow: hidden;
-  margin-right: auto;
-}
-
 .print-options {
   display: flex;
   opacity: 0;
@@ -149,9 +138,6 @@ $btn-active: rgba(0,0,0,0.08);
     opacity: 0;
     pointer-events: none;
   }
-  .debug & {
-    display: none;
-  }
 }
 
 .controls .select-wrap {
@@ -202,33 +188,6 @@ $btn-active: rgba(0,0,0,0.08);
   width: 100%;
 }
 
-
-.debug-controls {
-  display: none;
-  .debug .in-progress & {
-    display: block;
-  }
-}
-
-.refresh-btns {
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 8px 0;
-  transition: all 0.2s;
-  .in-progress & {
-    display: none;
-  }
-  a {
-    margin-left: 1em;
-    cursor: pointer;
-    &:hover {
-      color: black;
-    }
-  }
-}
-
 @media screen and (max-width: 720px) {
   .print-options {
     max-width: unset;
@@ -275,6 +234,9 @@ $btn-active: rgba(0,0,0,0.08);
   .controls {
     background: var(--bindery-ui-bg);
     box-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.14);
+  }
+  .root {
+    padding-top: 72px;
   }
 }
 

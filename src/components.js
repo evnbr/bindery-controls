@@ -4,9 +4,8 @@ import c from './prefixClass';
 const row = children => div(c('row'), children);
 
 // Button
-const btn = (txt) => button(`${c('control')} ${c('btn')}`, txt);
-const btnLight = (txt) => button(`${c('control')} ${c('btn')} ${c('btn-light')}`, txt);
-const btnMain = (txt) => button(`${c('control')} ${c('btn')} ${c('btn-main')}`, txt);
+const btn = (attrs, txt) => button(`${c('control')} ${c('btn')}`, attrs, txt);
+const btnMain = (attrs, txt) => button(`${c('control')} ${c('btn')} ${c('btn-main')}`, attrs, txt);
 
 const dropdown = (attrs, options) => {
   const selectVal = div(c('select-val'), [], 'Value');
@@ -22,7 +21,6 @@ const dropdown = (attrs, options) => {
 export {
   row,
   btn,
-  btnLight,
   btnMain,
   dropdown,
   option,

@@ -18,7 +18,7 @@ const h = (tagName, cls, attrs, children, text) => {
 }
 
 const div = (cls, children, label) => h('div', cls, {}, children, label);
-const button = (cls, label) => h('button', cls, {}, [], label);
+const button = (cls, attrs, label) => h('button', cls, attrs, [], label);
 const select = (cls, attrs, children) => h('select', cls, attrs, children);
 const option = (attrs, label) => h('option', null, attrs, [], label);
 

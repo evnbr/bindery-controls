@@ -5,7 +5,6 @@ import './controls.scss';
 import {
   dropdown,
   option,
-  btn,
   btnMain,
   row,
   div,
