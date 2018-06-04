@@ -43,7 +43,7 @@ class Controls {
       option({ value: Paper.LETTER_PORTRAIT, selected: true }, 'Default Page Size *'),
       option({ disabled: true }, 'Only Chrome supports custom page sizes. Set in your browser\'s print dialog instead.'),
     ]).map((opt) => {
-      if (opt.value === initialState.paper) { opt.selected = true; }
+      if (parseInt(opt.value, 10) === initialState.paper) { opt.selected = true; }
       return opt;
     });
 
@@ -58,8 +58,7 @@ class Controls {
     updateSheetSizeNames();
 
     const updatePaper = (e) => {
-      const newVal = e.target.value;
-      console.log(newVal);
+      const newVal = parseInt(e.target.value, 10);
       actions.setPaper(newVal);
       if (newVal === Paper.AUTO || newVal === Paper.AUTO_BLEED) {
         marksSelect.classList.add(c('hidden-select'));
@@ -80,7 +79,7 @@ class Controls {
         option({ value: Layout.SPREADS }, '1 Spread / Sheet'),
         option({ value: Layout.BOOKLET }, 'Booklet Sheets'),
       ].map((opt) => {
-        if (opt.value === initialState.layout) { opt.selected = true; }
+        if (parseInt(opt.value, 10) === initialState.layout) { opt.selected = true; }
         return opt;
       })
     );
@@ -94,7 +93,6 @@ class Controls {
         option({ value: Marks.BLEED }, 'Bleed Marks'),
         option({ value: Marks.BOTH }, 'Crop and Bleed'),
       ].map((opt) => {
-        console.log(opt);
         if (opt.value === initialState.marks) { opt.selected = true; }
         return opt;
       })

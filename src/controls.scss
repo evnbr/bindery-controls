@@ -23,7 +23,8 @@ $btn-active: rgba(0,0,0,0.08);
   margin: auto;
   color: var(--bindery-ui-text);
   padding: 10px;
-  overflow: visible;
+  overflow: hidden;
+  transition: height 0.3s;
   -webkit-font-smoothing: antialiased;
 
   * {
@@ -53,12 +54,10 @@ $btn-active: rgba(0,0,0,0.08);
   display: flex;
   opacity: 0;
   max-width: 0;
-  border-radius: 32px;
   overflow: hidden;
   transition: all 0.3s;
   flex-wrap: nowrap;
   transition-delay: 0.1s;
-  // border: 1px solid currentColor;
   .view-print & {
     max-width: 720px;
     margin-right: 12px;
@@ -192,7 +191,7 @@ $btn-active: rgba(0,0,0,0.08);
   .print-options {
     max-width: unset;
     max-height: 0;
-    [bindery-view-mode='print'] & {
+    .view-print & {
       max-width: unset;
       max-height: 240px;
       margin: 0;
@@ -212,6 +211,9 @@ $btn-active: rgba(0,0,0,0.08);
 
   .view-row {
     margin-left: auto;
+  }
+  .view-print .controls {
+    height: 104px;
   }
 
   .print-options {
@@ -245,11 +247,9 @@ $btn-active: rgba(0,0,0,0.08);
     padding-top: 190px;
   }
 
-  .view-print {
-    .controls {
-      background: var(--bindery-ui-bg);
-      height: 170px;
-    }
+  .view-print .controls {
+    background: var(--bindery-ui-bg);
+    height: 180px;
   }
   .print-options {
     flex-direction: column;

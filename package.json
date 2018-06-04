@@ -1,6 +1,6 @@
 {
   "name": "bindery-controls",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Default UI for bindery.js",
   "main": "dist/bindery-controls.cjs.js",
   "module": "dist/bindery-controls.esm.js",
