@@ -10,7 +10,8 @@ import {
   div,
 } from './components';
 
-const supportsCustomPageSize = !!window.chrome && !!window.chrome.webstore;
+// TODO: This is not a particularly robust check.
+const supportsCustomPageSize = !!window.chrome;
 
 class Controls {
   constructor(availableOptions, initialState, actions) {

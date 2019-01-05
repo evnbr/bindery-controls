@@ -232,7 +232,22 @@ $btn-active: rgba(0,0,0,0.08);
   box-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.14);
 }
 
+.view-flip .controls {
+  background: transparent;
+  box-shadow: none;
+}
+
+
 @media screen and (max-width: 960px) {
+  .in-progress {
+    .controls {
+      background: transparent;
+      box-shadow: none;
+    }
+    .root {
+      padding-top: 40px;
+    }
+  }
   .controls {
     background: var(--bindery-ui-bg);
     box-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.14);
